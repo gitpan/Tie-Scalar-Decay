@@ -45,10 +45,14 @@ if($scalar == 10) {                      # good, hasn't decayed yet
 tie $scalar, 'Tie::Scalar::Decay', (     # test a coderef FUNCTION
 	VALUE    => 0,                   # and a sub-second PERIOD
 	FUNCTION => \&increment,
-	PERIOD   => 0.3
+	PERIOD   => 0.1
 );
-sleep 1;
-print "not " unless($scalar == 3);
+my $sequence='';
+while($scalar<10) {
+	select(undef, undef, undef, 0.1);
+	$sequence.="$scalar ";
+}
+print "not " unless($sequence eq '0 1 2 3 4 5 6 7 8 9 10 ');
 print "ok 5\n";
 
 sub increment { $_[0]+1; }

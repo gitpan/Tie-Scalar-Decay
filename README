@@ -1,7 +1,7 @@
 
 
 
-Decay(3)       User Contributed Perl Documentation       Decay(3)
+Tie::Scalar::DecUasye(r3)Contributed Perl DocumentTaitei:o:nScalar::Decay(3)
 
 
 NNNNAAAAMMMMEEEE
@@ -61,13 +61,13 @@ DDDDEEEESSSSCCCCRRRRIIIIPPPPTTTTIIIIOOOONNNN
 
 
 
-2001-04-10                 perl v5.6.0                          1
+2001-04-11                 perl v5.6.0                          1
 
 
 
 
 
-Decay(3)       User Contributed Perl Documentation       Decay(3)
+Tie::Scalar::DecUasye(r3)Contributed Perl DocumentTaitei:o:nScalar::Decay(3)
 
 
            it is evalled as necessary, and should alter the
@@ -92,23 +92,14 @@ Decay(3)       User Contributed Perl Documentation       Decay(3)
 BBBBUUUUGGGGSSSS
        Plenty, no doubt.  Please tell me if you find any.
 
-       Sub-second periods may lead to Badness.  I would need to
-       use Time::Hires for this, but it is not entirely portable.
-       Admittedly, it does work almost everywhere, and I would
-       appreciate your comments.
-
-       eg, this does not do what you would expect ...
-
-           tie my $scalar, 'Tie::Scalar::Decay', (
-               VALUE    => 1,
-               FUNCTION => '$value*=2',
-               PERIOD   => '0.1s'              # a tenth of a second
-           );
-           while($scalar<=256) {
-               print "$scalar ";
-               select(undef, undef, undef, 0.1);
-           }
-
+       One caveat is that it relies on Time::HiRes.  If your
+       system doesn't support this, then you can comment it out
+       of the module and it'll still mostly work.  You may get
+       hurt by sub-second periods (they still work but the
+       granularity of the timer is only a second) and very
+       occasionally by boundary conditions if the load on your
+       machine is high.  Timing things with 1-second accuracy
+       blows goats.
 
 AAAAUUUUTTTTHHHHOOOORRRR
        David Cantrell <david@cantrell.org.uk>
@@ -127,6 +118,15 @@ SSSSEEEEEEEE AAAALLLLSSSSOOOO
 
 
 
-2001-04-10                 perl v5.6.0                          2
+
+
+
+
+
+
+
+
+
+2001-04-11                 perl v5.6.0                          2
 
 

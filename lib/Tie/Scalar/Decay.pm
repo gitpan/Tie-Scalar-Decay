@@ -2,7 +2,12 @@ package Tie::Scalar::Decay;
 
 use strict;
 
-my $VERSION=1.00;
+use Time::HiRes qw(time);    # if Time::HiRes isn't available for your
+                             # system, then you can comment this out and
+                             # it'll still work mostly.  However, test
+                             # five will fail for obvious reasons
+
+my $VERSION=1.1;
 
 sub TIESCALAR {
 	my $class = shift;
@@ -148,25 +153,12 @@ the absolute time.
 
 Plenty, no doubt.  Please tell me if you find any.
 
-Sub-second periods may lead to Badness.  I would need to use Time::Hires
-for this, but it is not entirely portable.  Admittedly, it does work
-almost everywhere, and I would appreciate your comments.
-
-eg, this does not do what you would expect ...
-
-=over 4
-
-    tie my $scalar, 'Tie::Scalar::Decay', (
-        VALUE    => 1,
-        FUNCTION => '$value*=2',
-        PERIOD   => '0.1s'              # a tenth of a second
-    );
-    while($scalar<=256) {
-        print "$scalar ";
-        select(undef, undef, undef, 0.1);
-    }
-
-=back
+One caveat is that it relies on Time::HiRes.  If your system doesn't
+support this, then you can comment it out of the module and it'll
+still mostly work.  You may get hurt by sub-second periods (they
+still work but the granularity of the timer is only a second) and
+very occasionally by boundary conditions if the load on your machine
+is high.  Timing things with 1-second accuracy blows goats.
 
 =head1 AUTHOR
 

@@ -1,0 +1,2 @@
+1.1	2001-04-11	Sub-second periods now work.  Introduced
+			dependency on Timer::HiRes
