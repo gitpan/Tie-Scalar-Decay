@@ -7,7 +7,7 @@ use Time::HiRes qw(time);    # if Time::HiRes isn't available for your
                              # it'll still work mostly.  However, test
                              # five will fail for obvious reasons
 
-my $VERSION=1.1;
+my $VERSION='1.1.1';
 
 sub TIESCALAR {
 	my $class = shift;
